@@ -1,0 +1,28 @@
+[build-system]
+requires = ["maturin>=0.13,<0.14"]
+build-backend = "maturin"
+
+[tool.maturin]
+python-source = "src"
+profile = "release"
+strip = true
+
+[project]
+name = "build_a_cog"
+dependencies = ["Panda3D~=1.10.11"]
+version = "0.0.1"
+authors = [
+  { name="Vhou-Atroph", email="vhouatroph@proton.me" },
+]
+description = "A Python package to make the creation of Cog actors easier!"
+readme = "readme.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Vhou-Atroph/build-a-cog"
+"Bug Tracker" = "https://github.com/Vhou-Atroph/build-a-cog/issues"
