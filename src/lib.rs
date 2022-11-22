@@ -17,7 +17,7 @@ pub struct Head {
     #[pyo3(get,set)]
     file: String,
     #[pyo3(get,set)]
-    node: String,
+    node: String, // several heads are stored within each suitx-heads file- it needs to be clarified which node the user would like to use.
     #[pyo3(get,set)]
     texture: Option<String> // head texture may not need to be changed from the node's default
 }
