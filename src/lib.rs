@@ -1,6 +1,19 @@
 use pyo3::prelude::*;
 
 #[pyclass]
+pub struct Cog {
+    #[pyo3(get,set)]
+    suit: Suit,
+    #[pyo3(get,set)]
+    head: Head,
+    #[pyo3(get,set)]
+    animation: Animation,
+    #[pyo3(get,set)]
+    hands: (f32,f32,f32,f32), // A Color tuple for Panda3D. It is in the format of (Red,Green,Blue,Alpha)
+}
+
+#[pyclass]
+#[derive(Clone)]
 pub struct Suit {
     #[pyo3(get,set)]
     model: String,
@@ -13,6 +26,7 @@ pub struct Suit {
 }
 
 #[pyclass]
+#[derive(Clone)]
 pub struct Head {
     #[pyo3(get,set)]
     file: String,
@@ -26,6 +40,7 @@ pub struct Head {
 
 /// Taken directly from adopt_a_doodle.
 #[pyclass]
+#[derive(Clone)]
 pub struct Animation {
     #[pyo3(get,set)]
     file: String,
