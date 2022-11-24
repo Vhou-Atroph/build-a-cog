@@ -14,7 +14,7 @@ pub struct Cog {
 
 #[pyclass]
 #[derive(Clone)]
-pub struct Suit {
+pub struct Suit { // did you know: the original name for cogs was going to be suits
     #[pyo3(get,set)]
     model: String,
     #[pyo3(get,set)]
