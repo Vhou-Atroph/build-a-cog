@@ -93,6 +93,16 @@ pub struct Suit { // did you know: the original name for cogs was going to be su
     legs: String
 }
 
+#[pymethods]
+impl Suit {
+
+    /// Creates a new Suit struct.
+    #[new]
+    pub fn new(model:String,torso:String,arms:String,legs:String) -> Self {
+        Self {model,torso,arms,legs}
+    }
+}
+
 #[pyclass]
 #[derive(Clone)]
 pub struct Head {
