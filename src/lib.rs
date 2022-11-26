@@ -14,12 +14,12 @@ use pyo3::prelude::*;
 ///             legs: String::from("phase_3.5/maps/c_leg.jpg"),
 ///             hands: (0.95,0.75,0.75,1.0)
 ///         },
-///         head: Head { // See the docs for the Head struct.
+///         head: Some(Head { // See the docs for the Head struct.
 ///             file: String::from("phase_4/models/char/suitA-heads.bam"),
 ///             node: String::from("yesman"),
 ///             texture: None,
 ///             color: None
-///         },
+///         }),
 ///         animation: Animation { // See the docs for the Animation struct.
 ///             file: String::from("phase_5/models/char/tt_a_ene_cga_song-and-dance.bam"),
 ///             anim_loop: true,
@@ -63,7 +63,7 @@ pub struct Cog {
     #[pyo3(get,set)]
     suit: Suit,
     #[pyo3(get,set)]
-    head: Head,
+    head: Option<Head>, // option is provided in case a user wishes to use a custom cog head.
     #[pyo3(get,set)]
     animation: Animation,
 }
@@ -73,7 +73,7 @@ impl Cog {
 
     /// Creates a new Cog struct.
     #[new]
-    pub fn new(suit:Suit,head:Head,animation:Animation) -> Self {
+    pub fn new(suit:Suit,head:Option<Head>,animation:Animation) -> Self {
         Self {suit,head,animation}
     }
 }
@@ -130,6 +130,7 @@ impl Suit {
     }
 }
 
+/// The head of a cog.
 #[pyclass]
 #[derive(Clone)]
 pub struct Head {
