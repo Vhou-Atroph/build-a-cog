@@ -8,6 +8,7 @@ from direct.showbase.Loader import *
 from . import rustycog
 
 def gen_head(head:rustycog.Head):
+    """Creates a generic cog head according to standard Cog heads."""
     mod = loader.loadModel(head.file)
     mod.find("**/"+head.node)
     if head.texture:
