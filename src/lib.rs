@@ -178,7 +178,42 @@ impl Head {
     }
 }
 
-// TODO: head list commands for each head model file: phase_4/suitA-heads.bam, phase_4/suitB-heads.bam, phase_3.5/suitC-heads.bam
+/// Returns a vector containing the names of the nodes in suitA-heads.bam
+#[pyfunction]
+pub fn suita_heads() -> Vec<String> {
+    vec![String::from("twoface"), // also used for double talker + the mingler
+    String::from("yesman"), // also used for robber baron + mr. hollywood
+    String::from("pennypincher"),
+    String::from("numbercruncher"), // also used for name dropper
+    String::from("legaleagle"),
+    String::from("headhunter"),
+    String::from("bigwig"),
+    String::from("bigcheese"),
+    String::from("backstabber")]
+}
+
+/// Returns a vector containing the names of the nodes in suitB-heads.bam
+#[pyfunction]
+pub fn suitb_heads() -> Vec<String> {
+    vec![String::from("telemarketer"), // also used for spin doctor
+    String::from("pencilpusher"),
+    String::from("movershaker"), // also used for bloodsucker
+    String::from("loanshark"),
+    String::from("beancounter"), // also used for downsizer
+    String::from("ambulancechaser")]
+}
+
+/// Returns a vector containing the names of the nodes in suitC-heads.bam
+#[pyfunction]
+pub fn suitc_heads() -> Vec<String> {
+    vec![String::from("tightwad"), // also used by bottom feeder
+    String::from("moneybags"),
+    String::from("micromanager"),
+    String::from("gladhander"),
+    String::from("flunky"), // also used by corporate raider- this head does not come with the funky glasses.
+    String::from("coldcaller") // honestly this is kinda fucked up. despite being named cold caller, by default this is the short change head. if you want the cold caller head you need to set the color to (0.25, 0.35, 1.0, 1.0).
+    ]
+}
 
 /// Taken directly from adopt_a_doodle.
 /// /// An animation that the cog will perform.
