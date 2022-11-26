@@ -1,5 +1,63 @@
 use pyo3::prelude::*;
 
+/// A boring robo-businessman that just can't take a joke! Created by Gyro Gearloose for the benefit of Toontown, they now seek to conquer it.
+/// Here's an explanation of each field:
+/// ```rust
+/// use rustycog::*;
+/// 
+/// fn makeacog() -> Cog {
+///     Cog {
+///         suit: Suit { // See the docs for the Suit struct.
+///             model: String::from("tt_a_ene_cga_zero.bam"),
+///             torso: String::from("phase_3.5/maps/c_blazer.jpg"),
+///             arms: String::from("phase_3.5/maps/c_sleeve.jpg"),
+///             legs: String::from("phase_3.5/maps/c_leg.jpg")
+///         },
+///         head: Head { // See the docs for the Head struct.
+///             file: String::from("phase_4/models/char/suitA-heads.bam"),
+///             node: String::from("yesman"),
+///             texture: None,
+///             color: None
+///         },
+///         animation: Animation { // See the docs for the Animation struct.
+///             file: String::from("phase_5/models/char/tt_a_ene_cga_song-and-dance.bam"),
+///             anim_loop: true,
+///             loop_from: None,
+///             loop_to: None,
+///             loop_restart: None,
+///             pose: false,
+///             pose_frame: None
+///         },
+///         hands: (0.95,0.75,0.75,1.0) // The color field requires a struct containing four 32-bit floating point values of values 0 through 1. The first three values are for Red, Green, and Blue content. The fourth value is the Alpha value. In this example, the color is the Bossbot suit's hand color as referenced from Anesidora.
+///     }
+/// }
+/// ```
+/// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same cog would look in Python:
+/// ```python
+/// from rustycog import *
+/// 
+/// let yesman = Cog(suit=Suit(model="tt_a_ene_cga_zero.bam",
+///         torso="phase_3.5/maps/c_blazer.jpg",
+///         arms="phase_3.5/maps/c_sleeve.jpg",
+///         legs="phase_3.5/maps/c_leg.jpg"
+///     ),
+///     head=Head(file="phase_4/models/char/suitA-heads.bam",
+///         node="yesman",
+///         texture=None,
+///         color=None
+///     ),
+///     animation=Animation(file="phase_5/models/char/tt_a_ene_cga_song-and-dance.bam",
+///         anim_loop=True,
+///         loop_from=None,
+///         loop_to=None,
+///         loop_restart=None,
+///         pose=False,
+///         pose_frame=None
+///     ),
+///     hands=(0.95,0.75,0.75,1.0)
+/// )
+/// ```
+/// If using rustycog through build_a_cog, the Cog struct will be accessible through `build_a_cog.Cog`.
 #[pyclass]
 pub struct Cog {
     #[pyo3(get,set)]
@@ -43,7 +101,9 @@ pub struct Head {
     #[pyo3(get,set)]
     node: String, // several heads are stored within each suitx-heads file- it needs to be clarified which node the user would like to use.
     #[pyo3(get,set)]
-    texture: Option<String> // head texture may not need to be changed from the node's default
+    texture: Option<String>, // head texture may not need to be changed from the node's default
+    #[pyo3(get,set)]
+    color: Option<String> // on the chance you need to recolor the head (cold caller)
 }
 
 // TODO: head list commands for each head model file: phase_4/suitA-heads.bam, phase_4/suitB-heads.bam, phase_3.5/suitC-heads.bam
@@ -78,7 +138,7 @@ pub struct Head {
 ///     pose=False,
 ///     pose_frame=None)
 /// ```
-/// If using rustycog through build_a_Cog, the Pattern struct will be accessible through `build_a_cog.Animation`.
+/// If using rustycog through build_a_cog, the Pattern struct will be accessible through `build_a_cog.Animation`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Animation {
