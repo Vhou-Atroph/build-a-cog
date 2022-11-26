@@ -12,6 +12,16 @@ pub struct Cog {
     hands: (f32,f32,f32,f32), // A Color tuple for Panda3D. It is in the format of (Red,Green,Blue,Alpha)
 }
 
+#[pymethods]
+impl Cog {
+
+    /// Creates a new Cog struct.
+    #[new]
+    pub fn new(suit:Suit,head:Head,animation:Animation,hands:(f32,f32,f32,f32)) -> Self {
+        Self {suit,head,animation,hands}
+    }
+}
+
 #[pyclass]
 #[derive(Clone)]
 pub struct Suit { // did you know: the original name for cogs was going to be suits
