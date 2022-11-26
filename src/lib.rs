@@ -1,5 +1,18 @@
 use pyo3::prelude::*;
 
+/// Module for basic classes in build-a-cog. This module is implemented in Rust.
+#[pymodule]
+fn rustycog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_class::<Cog>()?;
+    m.add_class::<Suit>()?;
+    m.add_class::<Head>()?;
+    m.add_class::<Animation>()?;
+    m.add_function(wrap_pyfunction!(suita_heads, m)?)?;
+    m.add_function(wrap_pyfunction!(suitb_heads, m)?)?;
+    m.add_function(wrap_pyfunction!(suitc_heads, m)?)?;
+    Ok(())
+}
+
 /// A boring robo-businessman that just can't take a joke! Created by Gyro Gearloose for the benefit of Toontown, they now seek to conquer it.
 /// Here's an explanation of each field:
 /// ```rust
