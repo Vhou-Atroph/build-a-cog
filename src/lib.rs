@@ -11,7 +11,8 @@ use pyo3::prelude::*;
 ///             model: String::from("tt_a_ene_cga_zero.bam"),
 ///             torso: String::from("phase_3.5/maps/c_blazer.jpg"),
 ///             arms: String::from("phase_3.5/maps/c_sleeve.jpg"),
-///             legs: String::from("phase_3.5/maps/c_leg.jpg")
+///             legs: String::from("phase_3.5/maps/c_leg.jpg"),
+///             hands: (0.95,0.75,0.75,1.0)
 ///         },
 ///         head: Head { // See the docs for the Head struct.
 ///             file: String::from("phase_4/models/char/suitA-heads.bam"),
@@ -27,8 +28,7 @@ use pyo3::prelude::*;
 ///             loop_restart: None,
 ///             pose: false,
 ///             pose_frame: None
-///         },
-///         hands: (0.95,0.75,0.75,1.0) // The color field requires a struct containing four 32-bit floating point values of values 0 through 1. The first three values are for Red, Green, and Blue content. The fourth value is the Alpha value. In this example, the color is the Bossbot suit's hand color as referenced from Anesidora.
+///         }
 ///     }
 /// }
 /// ```
@@ -39,7 +39,8 @@ use pyo3::prelude::*;
 /// let yesman = Cog(suit=Suit(model="tt_a_ene_cga_zero.bam",
 ///         torso="phase_3.5/maps/c_blazer.jpg",
 ///         arms="phase_3.5/maps/c_sleeve.jpg",
-///         legs="phase_3.5/maps/c_leg.jpg"
+///         legs="phase_3.5/maps/c_leg.jpg",
+///         hands=(0.95,0.75,0.75,1.0)
 ///     ),
 ///     head=Head(file="phase_4/models/char/suitA-heads.bam",
 ///         node="yesman",
@@ -53,8 +54,7 @@ use pyo3::prelude::*;
 ///         loop_restart=None,
 ///         pose=False,
 ///         pose_frame=None
-///     ),
-///     hands=(0.95,0.75,0.75,1.0)
+///     )
 /// )
 /// ```
 /// If using rustycog through build_a_cog, the Cog struct will be accessible through `build_a_cog.Cog`.
@@ -66,8 +66,6 @@ pub struct Cog {
     head: Head,
     #[pyo3(get,set)]
     animation: Animation,
-    #[pyo3(get,set)]
-    hands: (f32,f32,f32,f32), // A Color tuple for Panda3D. It is in the format of (Red,Green,Blue,Alpha)
 }
 
 #[pymethods]
@@ -75,11 +73,38 @@ impl Cog {
 
     /// Creates a new Cog struct.
     #[new]
-    pub fn new(suit:Suit,head:Head,animation:Animation,hands:(f32,f32,f32,f32)) -> Self {
-        Self {suit,head,animation,hands}
+    pub fn new(suit:Suit,head:Head,animation:Animation) -> Self {
+        Self {suit,head,animation}
     }
 }
 
+/// The model and texture for the suit that a Cog wears.
+/// Here's an explanation of each field:
+/// ```rust
+/// use rustycog::*;
+/// 
+/// fn makeasuit() -> Suit {
+///     Suit {
+///         model: String::from("tt_a_ene_cga_zero.bam"), // This references the suit model the cog wears. In this example, the cog wears a type A suit.
+///         torso=String::from("phase_3.5/maps/c_blazer.jpg"), // This is the texture file for the suit's torso. This uses the Bossbot suit texture.
+///         arms: String::from("phase_3.5/maps/c_sleeve.jpg"), // This is the texture file for the suit's arms. This uses the Bossbot suit texture.
+///         legs: String::from("phase_3.5/maps/c_leg.jpg"), // This is the texture file for the suit's legs. This uses the Bossbot suit texture.
+///         hands: (0.95,0.75,0.75,1.0) // The color field requires a struct containing four 32-bit floating point values of values 0 through 1. The first three values are for Red, Green, and Blue content. The fourth value is the Alpha value. In this example, the color is the Bossbot suit's hand color as referenced from Anesidora.
+///     }
+/// }
+/// ```
+/// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same cog would look in Python:
+/// ```python
+/// from rustycog import *
+/// 
+/// boss_suit = Suit(model="tt_a_ene_cga_zero.bam",
+///     torso="phase_3.5/maps/c_blazer.jpg",
+///     arms="phase_3.5/maps/c_sleeve.jpg",
+///     legs="phase_3.5/maps/c_leg.jpg",
+///     hands=(0.95,0.75,0.75,1.0)
+/// )
+/// ```
+/// If using rustycog through build_a_cog, the Suit struct will be accessible through `build_a_cog.Suit`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Suit { // did you know: the original name for cogs was going to be suits
@@ -90,7 +115,9 @@ pub struct Suit { // did you know: the original name for cogs was going to be su
     #[pyo3(get,set)]
     arms: String,
     #[pyo3(get,set)]
-    legs: String
+    legs: String,
+    #[pyo3(get,set)]
+    hands: (f32,f32,f32,f32), // A Color tuple for Panda3D. It is in the format of (Red,Green,Blue,Alpha)
 }
 
 #[pymethods]
@@ -98,8 +125,8 @@ impl Suit {
 
     /// Creates a new Suit struct.
     #[new]
-    pub fn new(model:String,torso:String,arms:String,legs:String) -> Self {
-        Self {model,torso,arms,legs}
+    pub fn new(model:String,torso:String,arms:String,legs:String,hands:(f32,f32,f32,f32)) -> Self {
+        Self {model,torso,arms,legs,hands}
     }
 }
 
