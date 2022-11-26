@@ -131,6 +131,30 @@ impl Suit {
 }
 
 /// The head of a cog.
+/// Here's an explanation for each field:
+/// ```rust
+/// use rustycog::*;
+/// 
+/// fn makeahead() -> Head {
+///     Head {
+///         file: String::from("phase_4/models/char/suitA-heads.bam"), // This is a file that links to a group of heads for a particular suit type. This file is for suit A heads.
+///         node: String::from("yesman"), // This is the head node we want to show for the cog. This node is Yesman/Mr. Hollywood head. Note that the Glad Hander's head, despite using the same texture, is in suitC-heads.bam.
+///         texture: None, // This is an optional parameter that can define a texture we want the suit head to have. In this case, it is None since we want the Yesman's head texture.
+///         color=None // This is an optional parameter that can change the color of a cog's head. This is most notable with the Cold Caller, which has a darker blue head than the Short Change. In this case, we do not need to change the texture.
+///     }
+/// }
+/// ```
+/// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same head would look in Python:
+/// ```python
+/// from rustycog import *
+/// 
+/// head=Head(file="phase_4/models/char/suitA-heads.bam",
+///     node="yesman",
+///     texture=None,
+///     color=None
+/// )
+/// ```
+/// If using rustycog through build_a_cog, the Head struct will be accessible through `build_a_cog.Head`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Head {
@@ -142,6 +166,16 @@ pub struct Head {
     texture: Option<String>, // head texture may not need to be changed from the node's default
     #[pyo3(get,set)]
     color: Option<String> // on the chance you need to recolor the head (cold caller)
+}
+
+#[pymethods]
+impl Head {
+
+    /// Creates a new Head struct.
+    #[new]
+    pub fn new(file:String,node:String,texture:Option<String>,color:Option<String>) -> Self {
+        Self {file,node,texture,color}
+    }
 }
 
 // TODO: head list commands for each head model file: phase_4/suitA-heads.bam, phase_4/suitB-heads.bam, phase_3.5/suitC-heads.bam
@@ -176,7 +210,7 @@ pub struct Head {
 ///     pose=False,
 ///     pose_frame=None)
 /// ```
-/// If using rustycog through build_a_cog, the Pattern struct will be accessible through `build_a_cog.Animation`.
+/// If using rustycog through build_a_cog, the Animation struct will be accessible through `build_a_cog.Animation`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Animation {
