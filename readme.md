@@ -105,7 +105,7 @@ This code will produce the following cog:
 
 ## Documentation
 
-You can find documentation for build_a_cog in the [rustydoodle lib.rs file](https://raw.githubusercontent.com/Vhou-Atroph/build-a-cog/main/src/lib.rs).
+You can find documentation for build_a_cog in the [rustycog lib.rs file](https://raw.githubusercontent.com/Vhou-Atroph/build-a-cog/main/src/lib.rs).
 
 ## License
 
