@@ -31,5 +31,5 @@ def build(cog:rustycog.Cog):
     if cog.animation.anim_loop:
         actor.loop("animation",restart=cog.animation.loop_restart,fromFrame=cog.animation.loop_from,toFrame=cog.animation.loop_to)
     if cog.animation.pose:
-        actor.pose("animation",cog.pose_frame)
+        actor.pose("animation",cog.animation.pose_frame)
     return actor

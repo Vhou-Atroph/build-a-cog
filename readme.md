@@ -18,7 +18,7 @@ To install the latest version of build_a_cog, open your favorite command termina
 pip install build_a_cog
 ```
 
-If for whatever reason you are unable to install adopt_a_doodle through pip, you can also install it through the [latest source distribution released on GitHub](https://github.com/Vhou-Atroph/build-a-cog/releases/latest). Download the .whl file and open your favorite command terminal. Navigate to wherever the file was downloaded and run the following command:
+If for whatever reason you are unable to install build_a_cog through pip, you can also install it through the [latest source distribution released on GitHub](https://github.com/Vhou-Atroph/build-a-cog/releases/latest). Download the .whl file and open your favorite command terminal. Navigate to wherever the file was downloaded and run the following command:
 
 ```ps
 pip install [file]
@@ -26,7 +26,7 @@ pip install [file]
 
 ## Usage
 
-With build_a_cog, the creation of Doodle actors becomes much easier.  
+With build_a_cog, the creation of Cog actors becomes much easier.  
 Like with any other Panda3D Toontown project, you must first extract the Phase Files. You can do so with the following command, with [x] being replaced by the id of the phase file:
 
 ```ps
