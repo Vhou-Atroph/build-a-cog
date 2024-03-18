@@ -2,7 +2,7 @@ use pyo3::prelude::*;
 
 /// Module for basic classes in build-a-cog. This module is implemented in Rust.
 #[pymodule]
-fn rustycog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn build_a_cog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Cog>()?;
     m.add_class::<Suit>()?;
     m.add_class::<Head>()?;
@@ -16,12 +16,13 @@ fn rustycog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 /// A boring robo-businessman that just can't take a joke! Created by Gyro Gearloose for the benefit of Toontown, they now seek to conquer it.
 /// Here's an explanation of each field:
 /// ```rust
-/// use rustycog::*;
+/// use build_a_cog::*;
 /// 
 /// fn makeacog() -> Cog {
 ///     Cog {
 ///         suit: Suit { // See the docs for the Suit struct.
 ///             model: String::from("tt_a_ene_cga_zero.bam"),
+///             sigil: Some(String::from("CorpIcon"))
 ///             torso: String::from("phase_3.5/maps/c_blazer.jpg"),
 ///             arms: String::from("phase_3.5/maps/c_sleeve.jpg"),
 ///             legs: String::from("phase_3.5/maps/c_leg.jpg"),
@@ -47,9 +48,10 @@ fn rustycog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 /// ```
 /// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same cog would look in Python:
 /// ```python
-/// from rustycog import *
+/// from build_a_cog import *
 /// 
 /// let yesman = Cog(suit=Suit(model="tt_a_ene_cga_zero.bam",
+///         sigil="CorpIcon"
 ///         torso="phase_3.5/maps/c_blazer.jpg",
 ///         arms="phase_3.5/maps/c_sleeve.jpg",
 ///         legs="phase_3.5/maps/c_leg.jpg",
@@ -70,7 +72,7 @@ fn rustycog(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 ///     )
 /// )
 /// ```
-/// If using rustycog through build_a_cog, the Cog struct will be accessible through `build_a_cog.Cog`.
+/// If using build_a_cog through build_a_cog, the Cog struct will be accessible through `build_a_cog.Cog`.
 #[pyclass]
 pub struct Cog {
     #[pyo3(get,set)]
@@ -86,7 +88,7 @@ impl Cog {
 
     /// Creates a new Cog struct.
     #[new]
-    pub fn new(suit:Suit,head:Option<Head>,animation:Animation) -> Self {
+    pub fn new(suit:Suit,animation:Animation,head:Option<Head>) -> Self {
         Self {suit,head,animation}
     }
 }
@@ -94,11 +96,12 @@ impl Cog {
 /// The model and texture for the suit that a Cog wears.
 /// Here's an explanation of each field:
 /// ```rust
-/// use rustycog::*;
+/// use build_a_cog::*;
 /// 
 /// fn makeasuit() -> Suit {
 ///     Suit {
 ///         model: String::from("tt_a_ene_cga_zero.bam"), // This references the suit model the cog wears. In this example, the cog wears a type A suit.
+///         sigil: Some(String::from("CorpIcon")), // This references the Bossbot sigil present on Bossbot Cog suits.
 ///         torso=String::from("phase_3.5/maps/c_blazer.jpg"), // This is the texture file for the suit's torso. This uses the Bossbot suit texture.
 ///         arms: String::from("phase_3.5/maps/c_sleeve.jpg"), // This is the texture file for the suit's arms. This uses the Bossbot suit texture.
 ///         legs: String::from("phase_3.5/maps/c_leg.jpg"), // This is the texture file for the suit's legs. This uses the Bossbot suit texture.
@@ -108,21 +111,24 @@ impl Cog {
 /// ```
 /// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same cog would look in Python:
 /// ```python
-/// from rustycog import *
+/// from build_a_cog import *
 /// 
 /// boss_suit = Suit(model="tt_a_ene_cga_zero.bam",
+///     sigil="CorpIcon"
 ///     torso="phase_3.5/maps/c_blazer.jpg",
 ///     arms="phase_3.5/maps/c_sleeve.jpg",
 ///     legs="phase_3.5/maps/c_leg.jpg",
 ///     hands=(0.95,0.75,0.75,1.0)
 /// )
 /// ```
-/// If using rustycog through build_a_cog, the Suit struct will be accessible through `build_a_cog.Suit`.
+/// If using build_a_cog through build_a_cog, the Suit struct will be accessible through `build_a_cog.Suit`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Suit { // did you know: the original name for cogs was going to be suits
     #[pyo3(get,set)]
     model: String,
+    #[pyo3(get,set)]
+    sigil: Option<String>, // this can have four values corresponding to each department: SalesIcon CorpIcon LegalIcon, and MoneyIcon.
     #[pyo3(get,set)]
     torso: String,
     #[pyo3(get,set)]
@@ -138,15 +144,15 @@ impl Suit {
 
     /// Creates a new Suit struct.
     #[new]
-    pub fn new(model:String,torso:String,arms:String,legs:String,hands:(f32,f32,f32,f32)) -> Self {
-        Self {model,torso,arms,legs,hands}
+    pub fn new(model:String,torso:String,arms:String,legs:String,hands:(f32,f32,f32,f32),sigil:Option<String>) -> Self {
+        Self {model,sigil,torso,arms,legs,hands}
     }
 }
 
 /// The head of a cog.
 /// Here's an explanation for each field:
 /// ```rust
-/// use rustycog::*;
+/// use build_a_cog::*;
 /// 
 /// fn makeahead() -> Head {
 ///     Head {
@@ -159,7 +165,7 @@ impl Suit {
 /// ```
 /// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same head would look in Python:
 /// ```python
-/// from rustycog import *
+/// from build_a_cog import *
 /// 
 /// head=Head(file="phase_4/models/char/suitA-heads.bam",
 ///     node="yesman",
@@ -167,7 +173,7 @@ impl Suit {
 ///     color=None
 /// )
 /// ```
-/// If using rustycog through build_a_cog, the Head struct will be accessible through `build_a_cog.Head`.
+/// If using build_a_cog through build_a_cog, the Head struct will be accessible through `build_a_cog.Head`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Head {
@@ -232,7 +238,7 @@ pub fn suitc_heads() -> Vec<String> {
 /// /// An animation that the cog will perform.
 /// Here's an explanation for each field:
 /// ```rust
-/// use rustycog::*;
+/// use build_a_cog::*;
 /// 
 /// fn exampleanimation() -> Animation {
 ///     Animation {
@@ -248,7 +254,7 @@ pub fn suitc_heads() -> Vec<String> {
 /// ```
 /// However, since this is a Python module, you probably won't be implementing this struct like this in Rust! Here's how the same animation would look in Python:
 /// ```python
-/// from rustycog import *
+/// from build_a_cog import *
 /// 
 /// exampleanimation = Animation(file="phase_5/models/char/tt_a_ene_cga_song-and-dance.bam",
 ///     anim_loop=True,
@@ -258,7 +264,7 @@ pub fn suitc_heads() -> Vec<String> {
 ///     pose=False,
 ///     pose_frame=None)
 /// ```
-/// If using rustycog through build_a_cog, the Animation struct will be accessible through `build_a_cog.Animation`.
+/// If using build_a_cog through build_a_cog, the Animation struct will be accessible through `build_a_cog.Animation`.
 #[pyclass]
 #[derive(Clone)]
 pub struct Animation {
@@ -283,7 +289,7 @@ impl Animation {
 
     /// Creates a new Animation struct.
     #[new]
-    pub fn new(file:String,anim_loop:bool,loop_from:Option<u64>,loop_to:Option<u64>,loop_restart:Option<u64>,pose:bool,pose_frame:Option<u64>) -> Self {
+    pub fn new(file:String,anim_loop:bool,pose:bool,pose_frame:Option<u64>,loop_from:Option<u64>,loop_to:Option<u64>,loop_restart:Option<u64>) -> Self {
         Self {file,anim_loop,loop_from,loop_to,loop_restart,pose,pose_frame}
     }
 }

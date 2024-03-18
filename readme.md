@@ -47,7 +47,7 @@ With build_a_cog, you will need phase_3, phase_3.5, phase_4, phase_5, phase_6, p
 | test_cog.py
 ```
 
-Next, drop the three suit type models in your main directory. tt_a_ene_cga_zero.bam, tt_a_ene_cgb_zero.bam, and tt_a_ene_cgc_zero.bam are all in phase_3.5/models/char. Once these files are in your directory, it should look like this:
+Next, drop the three suit type models in your main directory. tt_a_ene_cga_zero.bam, tt_a_ene_cgb_zero.bam, and tt_a_ene_cgc_zero.bam are all in phase_3.5/models/char. Finally, you will need the suit icon model: ttr_m_gui_gen_cogIcons.bam. You can find this file in phase_3/models/gui. Once these files are in your directory, it should look like this:
 
 ```none
 | phase_3
@@ -62,6 +62,7 @@ Next, drop the three suit type models in your main directory. tt_a_ene_cga_zero.
 | tt_a_ene_cga_zero.bam
 | tt_a_ene_cgb_zero.bam
 | tt_a_ene_cgc_zero.bam
+| ttr_m_gui_gen_cogIcons.bam
 ```
 
 Now that all the necessary files are here, you can open the Python file containing your scene and start to program! Here's an example scene:
@@ -72,6 +73,7 @@ from direct.directbase.DirectStart import base
 import build_a_cog as cog
 
 yesman = cog.build(cog.Cog(suit=cog.Suit(model="tt_a_ene_cga_zero.bam",
+        sigil="CorpIcon",
         torso="phase_3.5/maps/c_blazer.jpg",
         arms="phase_3.5/maps/c_sleeve.jpg",
         legs="phase_3.5/maps/c_leg.jpg",

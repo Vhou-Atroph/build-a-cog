@@ -6,12 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "rustycog"
+name = "build_a_cog"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.17.3"
+version = "0.20.3"
 features = ["extension-module"]
-
-[package.metadata.maturin]
-name = "build_a_cog.rustycog"

@@ -6,7 +6,8 @@ yesman = cog.build(cog.Cog(suit=cog.Suit(model="tt_a_ene_cga_zero.bam",
         torso="phase_3.5/maps/c_blazer.jpg",
         arms="phase_3.5/maps/c_sleeve.jpg",
         legs="phase_3.5/maps/c_leg.jpg",
-        hands=(0.95,0.75,0.75,1.0)
+        hands=(0.95,0.75,0.75,1.0),
+        sigil="CorpIcon"
     ),
     head=cog.Head(file="phase_4/models/char/suitA-heads.bam",
         node="yesman",

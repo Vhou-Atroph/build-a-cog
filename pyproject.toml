@@ -10,13 +10,13 @@ strip = true
 [project]
 name = "build_a_cog"
 dependencies = ["Panda3D~=1.10.11"]
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Vhou-Atroph", email="vhouatroph@proton.me" },
 ]
 description = "A Python package to make the creation of Cog actors easier!"
 readme = "readme.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
