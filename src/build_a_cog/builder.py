@@ -42,3 +42,9 @@ def build(cog:build_a_cog.Cog):
     if cog.animation.pose:
         actor.pose("animation",cog.animation.pose_frame)
     return actor
+
+def get_right_hand(cog):
+    return cog.find('**/**/def_joint_right_hold')
+
+def get_left_hand(cog):
+    return cog.find('**/**/def_joint_left_hold')
